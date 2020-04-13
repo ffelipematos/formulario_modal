@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UNIFTC</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.min.js"></script>
+    <script src="./index.js"></script>
+
+</head>
+
+<body>
+
+    <div class="table-responsive">
+        <table border="0" cellspacing="10" cellpadding="5" style="width:42%;">
+            <tr>
+                <td>
+                    <select id="selectUnidade" class="form-control">
+                        <option value="unidade">UNIDADE FTC</option>
+                        <option value="CAM">CAMAÇARI</option>
+                        <option value="FSA">FEIRA DE SANTANA</option>
+                        <option value="ITA">ITABUNA</option>
+                        <option value="JEQ">JEQUIE</option>
+                        <option value="JUA">JUAZEIRO</option>
+                        <option value="PET">PETROLINA</option>
+                        <option value="SSA_COM">SALVADOR COMÉRCIO</option>
+                        <option value="SSA_PAR">SALVADOR PARALELA</option>
+                        <option value="VIC">VITÓRIA DA CONQUISTA</option>
+                    </select>
+                </td>
+
+                <td>
+                    <select id="selectCursos" class="form-control">
+                        <option value="cursos">SELECIONE UM CURSO</option>
+                        <option value="ADM">ADMINISTRAÇÃO</option>
+                        <option value="BIO_MED">BIOMEDICINA</option>
+                        <option value="DIR">DIREITO</option>
+                        <option value="EDF">EDUCAÇÃO FISÍCA</option>
+                        <option value="ENF">ENFERMAGEM</option>
+                        <option value="ENG_CIV">ENGENHARIA CIVIL</option>
+                        <option value="NUT">NUTRICÃO</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+
+    <button type="button" id="buscarbtn" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">
+        Buscar
+    </button>
+
+    <div class="modal fade" id="staticBackdrop" data-backdrop="static" tabindex="-1" role="dialog"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Formulário</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form name="form" method="post" action="index.html">
+                        <div class="form-group">
+                            <label for="formGroupExampleInput">E-Mail</label>
+                            <input type="email" class="form-control" id="email" placeholder="DIGITE SEU E-MAIL">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputCPF">CPF</label>
+                            <input type="text" class="form-control" name="cpf" id="cpf" placeholder="000.000.000-00">
+                        </div>
+                        <div class="form-group">
+                            <label for="formGroupExampleInput2">Telefone</label>
+                            <input type="tel" class="form-control" id="telefone" placeholder="(00) 0000-0000">
+                        </div>
+                        <div class="form-group">
+                            <label for="formGroupExampleInput2">CAMPO OCULTO</label>
+                            <input type="text" class="form-control" id="formGroupExampleInput4" placeholder="...">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
+                    <button type="button" class="btn btn-success" onclick="Disparar();">Enviar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        fbq('init', '591116688380206', { em: email.value });
+        fbq('trackCustom', 'SiteVestibular', { processo_seletivo: fdi.value, curso: curso.value, unidade: 'unidade.value' });
+        fbq('track', 'Lead', { content_category: unidade.value, content_name: curso.value, search_string: fdi.value, value: 0.00, currency: 'BRL' });
+
+        gtag('event', 'inscricao_vestibular', { 'event_category': 'pagina_vestibular', 'event_label': '<FDI.value>*' });
+    </script>
+
+</body>
+
+</html>

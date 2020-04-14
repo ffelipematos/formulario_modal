@@ -11,19 +11,46 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.min.js"></script>
     <script src="./index.js"></script>
+    <script>
+                                        // -------------------   CASCADE SELECT ------------------- //
+        jQuery(function ($) {
+            var cascadeDROP = {
+                'UNIDADES': ['SELECIONE UM CURSO'],
+                'CAM': ['DIREITO'],
+                'FSA': ['ADMINISTRAÇÃO', 'BIOMEDICINA', 'CIENCIAS CONTÁBEIS', 'DIREITO', 'EDUCAÇÃO FÍSICA', 'ENFERMAGEM', 'ENGENHARIA CIVIL', 'FARMÁRCIA', 'FISIOTERAPIA', 'MECIDINA VETERINÁRIA', 'NUTRIÇÃO', 'ODONTOLOGIA', 'PSICOLOGIA', 'SISTEMAS DE INFORMAÇÃO'],
+                'ITA': ['ENGENHARIA AMBIENTAL', 'FARMÁCIA', 'FISIOTERAPIA', 'MEDICINA VETERINÁRIA', 'NUTRIÇÃO', 'ODONTOLOGIA', 'PSICOLOGIA', 'SISTEMA DE INFORMAÇÃO'],
+                'JEQ': ['EDUCAÇÃO FÍSICA', 'ENFERMAGEM', 'ENGENHARIA CIVIL', 'FARMÁCIA', 'FISIOTERAPIA', 'NUTRIÇÃO', 'ODONTOLOGIA', 'PSICOLOGIA'],
+                'JUA': ['BIOMEDICINA', 'ENFERMAGEM', 'FARMÁCIA', 'FISIOTERAPIA', 'NUTRIÇÃO', 'ODONTOLOGIA'],
+                'PET': ['ARQUITETURA E URBANISMO', 'DIREITO', 'ENGENHARIA CIVIL', 'ENGENGARIA DE PRODUÇÃO', 'ENGENHARIA ELÉTRICA', 'PSICOLOGIA'],
+                'SSA_COM': ['ADMINISTRAÇÃO', 'CIÊNCIAS CONTABÉIS', 'DIREITO', 'ENFERMAGEM', 'FARMÁCIA', 'FISIOTERAPIA', 'NUTRIÇÃO'],
+                'SSA_PAR': ['ADMINISTRAÇÃO', 'BIOMEDICINA', 'CIÊNCIAS AERONAÚTICAS', 'COMUNICAÇÃO SOCIAL EM JORNALISMO', 'COMUNICAÇÃO SOCIAL EM PUBLICIDADE E PROPAGANDA', 'DIREITO', 'EDUCAÇÃO FÍSICA', 'ENFERMAGEM', 'ENGENHARIA CIVIL', 'ENGENHARIA ELÉTRICA EM AUTOMAÇÃO', 'FARMÁCIA', 'FISIOTERAPIA', 'MEDICINA VETERINÁRIA', 'NUTRIÇÃO', 'ODONTOLOGIA', 'PSICOLOGIA', 'SISTEMA DE INFORMAÇÃO', 'TECNOLÓGO EM RADIOLOGIA'],
+                'VIC': ['ADMINISTRAÇÃO', 'BIOMEDICINA', 'COMUNICAÇÃO SOCIAL EM PUBLICIDADE E PROPAGANDA', 'DIREITO', 'EDUCAÇÃO FÍSICA', 'ENFERMAGEM', 'ENGENHARIA CIVIL'],
+            }
 
+            var $cascadeDROP = $('#selectCURSOS');
+
+            $('#selectUNIDADE').change(function () {
+                var City = $(this).val();
+                var cities = cascadeDROP[City] || [];
+                var cidades = $.map(cities, function (val) {
+                    return '<option value="' + val + '">' + val + '</option>';
+                }).join('');
+                $cascadeDROP.empty().append(cidades);
+            });
+        });    
+    </script>
 </head>
-
+                                    <!------------------------------- BODY  -----------------------------------> 
 <body>
-
     <div class="table-responsive">
         <table border="0" cellspacing="10" cellpadding="5" style="width:42%;">
             <tr>
                 <td>
-                    <select id="selectUnidade" class="form-control">
-                        <option value="unidade">UNIDADE FTC</option>
+                    <select id="selectUNIDADE" class="selectDD form-control col-sm-12">
+                        <option value="UNIDADES">UNIDADE FTC</option>
                         <option value="CAM">CAMAÇARI</option>
                         <option value="FSA">FEIRA DE SANTANA</option>
                         <option value="ITA">ITABUNA</option>
@@ -36,25 +63,19 @@
                     </select>
                 </td>
 
-                <td>
-                    <select id="selectCursos" class="form-control">
-                        <option value="cursos">SELECIONE UM CURSO</option>
-                        <option value="ADM">ADMINISTRAÇÃO</option>
-                        <option value="BIO_MED">BIOMEDICINA</option>
-                        <option value="DIR">DIREITO</option>
-                        <option value="EDF">EDUCAÇÃO FISÍCA</option>
-                        <option value="ENF">ENFERMAGEM</option>
-                        <option value="ENG_CIV">ENGENHARIA CIVIL</option>
-                        <option value="NUT">NUTRICÃO</option>
+                <td class="tddSelect">
+                    <select id="selectCURSOS" class="selectDD form-control col-sm-12">
+                        <option value="CURSO">SELECIONE UM CURSO</option>
                     </select>
                 </td>
             </tr>
         </table>
     </div>
 
+                        <!------------------------------- BUTTON + MODAL  ----------------------------------->
 
     <button type="button" id="buscarbtn" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">
-        Buscar
+        <b><i>INSCREVA-SE</i></b>
     </button>
 
     <div class="modal fade" id="staticBackdrop" data-backdrop="static" tabindex="-1" role="dialog"
@@ -62,7 +83,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Formulário</h5>
+                    <img src="./img/formulario.png" id="formheader">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -71,7 +92,9 @@
                     <form name="form" method="post" action="index.html">
                         <div class="form-group">
                             <label for="formGroupExampleInput">E-Mail</label>
-                            <input type="email" class="form-control" id="email" placeholder="DIGITE SEU E-MAIL">
+                            <input type="email" class="form-control" id="email" name="email" onblur="validarEmail()"
+                                onfocus="redefinirMsg()" placeholder="DIGITE SEU E-MAIL">
+                            <span id="error-email"></span>
                         </div>
                         <div class="form-group">
                             <label for="inputCPF">CPF</label>
@@ -79,30 +102,20 @@
                         </div>
                         <div class="form-group">
                             <label for="formGroupExampleInput2">Telefone</label>
-                            <input type="tel" class="form-control" id="telefone" placeholder="(00) 0000-0000">
+                            <input type="tel" class="form-control" id="telefone" placeholder="(00) 0 0000-0000">
                         </div>
                         <div class="form-group">
                             <label for="formGroupExampleInput2">CAMPO OCULTO</label>
-                            <input type="text" class="form-control" id="formGroupExampleInput4" placeholder="...">
+                            <input type="text" class="form-control" id="oculto" placeholder="...">
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
-                    <button type="button" class="btn btn-success" onclick="Disparar();">Enviar</button>
+                    <button type="button" id="modalbtn" class="btn btn-success"><b>ENVIAR</b></button>
                 </div>
             </div>
         </div>
     </div>
-
-    <script>
-        fbq('init', '591116688380206', { em: email.value });
-        fbq('trackCustom', 'SiteVestibular', { processo_seletivo: fdi.value, curso: curso.value, unidade: 'unidade.value' });
-        fbq('track', 'Lead', { content_category: unidade.value, content_name: curso.value, search_string: fdi.value, value: 0.00, currency: 'BRL' });
-
-        gtag('event', 'inscricao_vestibular', { 'event_category': 'pagina_vestibular', 'event_label': '<FDI.value>*' });
-    </script>
-
 </body>
 
 </html>
